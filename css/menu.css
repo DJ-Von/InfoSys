@@ -1,0 +1,17 @@
+.nav-scroller {
+  overflow-y: hidden;
+  background-color: #fff;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+.nav-scroller__items {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.nav-scroller__item {
+  color: #424242;
+  display: flex;
+  padding: 0.5rem 1.25rem;
+  text-decoration: none;
+}
