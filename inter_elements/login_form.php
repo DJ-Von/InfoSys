@@ -1,5 +1,7 @@
 <?php 
+
 $data = $_POST;
+
 echo '<link href="css/login_form.css" rel="stylesheet">
 <div class="login-page">
   <div class="form">
@@ -9,5 +11,5 @@ echo '<link href="css/login_form.css" rel="stylesheet">
       <button type="submit" name="do_login">Войти</button>
     </form>
   </div>
-</div>'
+</div>';
 ?>

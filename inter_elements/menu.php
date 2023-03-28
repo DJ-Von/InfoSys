@@ -1,4 +1,6 @@
 <?php
+
+
 if(isset($_SESSION['teacher_login']) && $_SESSION['teacher_login'] == 'admin'){
 echo '<link href="../css/menu.css" rel="stylesheet">
     <div class="nav-scroller">

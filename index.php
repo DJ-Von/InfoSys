@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 require_once 'DB.php';
 require_once 'Inter.php';
@@ -37,6 +36,7 @@ if (isset($data['do_login'])) {
 Inter::head();
 if(!isset($_SESSION['teacher_login'])){
     Inter::loginForm();
+
 }
 
 Inter::footer();
