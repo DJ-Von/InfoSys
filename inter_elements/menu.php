@@ -1,6 +1,12 @@
 <?php
 
-
+echo "<script>
+onload = function ()
+{
+for (var lnk = document.links, j = 0; j < lnk.length; j++)
+if (lnk [j].href == document.URL) lnk [j].style.cssText = 'color:red; border:1px solid #000';
+}
+</script>";
 if(isset($_SESSION['teacher_login']) && $_SESSION['teacher_login'] == 'admin'){
 echo '<link href="../css/menu.css" rel="stylesheet">
     <div class="nav-scroller">
