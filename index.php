@@ -23,8 +23,8 @@ if (isset($data['do_login'])) {
                 echo "<script>
                         location.replace('admin/index.php');
                       </script>";
-            else
-                echo "Добро пожаловать, ".$teacher->teacher_login;
+            /*else
+                echo "Добро пожаловать, ".$teacher->teacher_login;*/
         }  
         else  
         {  
@@ -37,6 +37,10 @@ Inter::head();
 if(!isset($_SESSION['teacher_login'])){
     Inter::loginForm();
 
+}
+
+else{
+    echo "Добро пожаловать, ".$_SESSION['teacher_login'];
 }
 
 Inter::footer();

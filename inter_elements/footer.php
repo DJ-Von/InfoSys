@@ -3,6 +3,7 @@
 if(isset($_SESSION['teacher_login']) && $_SESSION['teacher_login'] == 'admin'){
 echo '
     </div>
+    </div>
     <link href="../css/foot.css" rel="stylesheet">
     <div class="foot">
     <p>Котрунцев Глеб 32928/1</p>
@@ -17,6 +18,7 @@ echo '
 
 else{
     echo '
+    </div>
     </div>
     <link href="css/foot.css" rel="stylesheet">
     <div class="foot">

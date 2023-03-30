@@ -6,7 +6,8 @@ include_once (realpath('../Teacher.php'));
 if(isset($_SESSION['teacher_login']) && $_SESSION['teacher_login'] == 'admin'){
 Inter::head();
 ?>
-<p>Привет, <?php echo $_SESSION['teacher_login'];?></p>
+<p>Привет, <?php echo $_SESSION['teacher_login'];?>. Скоро главная страница будет готова.</p>
+<p>Пока что она в разработке.</p>
 <?php
 Inter::footer();
 }

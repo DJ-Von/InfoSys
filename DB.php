@@ -17,8 +17,8 @@ error_reporting(E_ALL);
       }  
       
       public function getTable($name){
-          $query = "SELECT * FROM `".$name;
-          $result = mysqli_query($db->con, $query);
+          $query = "SELECT * FROM `".$name."`";
+          $result = mysqli_query($this->con, $query);
           return $result;
       }
  }  
