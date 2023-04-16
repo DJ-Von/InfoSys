@@ -1,12 +1,11 @@
 <?php
-include_once (realpath('../DB.php'));
-include_once (realpath('../Inter.php'));
-include_once (realpath('../Teacher.php'));
+include_once (realpath('../classes/DB.php'));
+include_once (realpath('../classes/Inter.php'));
 
-if(isset($_SESSION['teacher_login']) && $_SESSION['teacher_login'] == 'admin'){
+if(isset($_SESSION['logged_teacher']) && $_SESSION['logged_teacher'] == 'admin'){
 Inter::head();
 ?>
-<p>Привет, <?php echo $_SESSION['teacher_login'];?>. Скоро главная страница будет готова.</p>
+<p>Привет, <?php echo $_SESSION['logged_teacher'];?>. Скоро главная страница будет готова.</p>
 <p>Пока что она в разработке.</p>
 <?php
 Inter::footer();

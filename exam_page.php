@@ -1,12 +1,49 @@
 <?php
-include_once (realpath('DB.php'));
-include_once (realpath('Inter.php'));
+include_once (realpath('classes/Exam.php'));
+include_once (realpath('classes/Inter.php'));
+Inter::head();
+$db = new DB;
 
-
-    Inter::head();
-    Inter::echoTable('SELECT `exam_id`, `subject_name`, DATE_FORMAT(`exam_date`, "%d-%m-%Y") encoded_date, `teacher_full_name`, `student_full_name`, `team_name`, `exam_mark` FROM `exam` INNER JOIN subject ON subject_id=exam_subject_id INNER JOIN student ON student_id=exam_student_id INNER JOIN team ON student_team_id=team_id INNER JOIN teacher ON subject_teacher_id=teacher_id',
-                      array('№', 'Предмет', 'Дата', 'Преподаватель', 'Студент', 'Группа', 'Оценка'), 
-                      array('exam_id', 'subject_name', 'encoded_date', 'teacher_full_name', 'student_full_name', 'team_name', 'exam_mark'));
-    Inter::footer();
-
+if(isset($_POST['push']) && isset($_SESSION['logged_teacher'])){
+    $errors = [];
+    if(trim($_POST['teacher'])=='' && !isset($_GET['edit'])){
+        $errors[] = "Введите преподавателя";
+    }
+    if(trim($_POST['date'])=='' && !isset($_GET['edit'])){
+        $errors[] = "Введите дату";
+    }
+    if(trim($_POST['student'])=='' && !isset($_GET['edit'])){
+        $errors[] = "Введите студента";
+    }
+    if(trim($_POST['mark'])=='' && !isset($_GET['edit'])){
+        $errors[] = "Введите оценку";
+    }
+    
+    if (isset($_GET['edit'])) {
+        if(empty($errors))
+            Exam::change($_GET['edit'], $_POST['teacher'], $_POST['date'], $_POST['student'], $_POST['mark']);
+        else
+            echo '<div style = "color: red">'.array_shift($errors).'</div>';
+    }
+    
+    else {
+        $exam = new Exam($_POST['teacher'], $_POST['date'], $_POST['student'], $_POST['mark']);
+        $res = $db->getQueryResult("SELECT * from teacher where teacher_login='".$_SESSION['logged_teacher']."'");
+        $teacher = mysqli_fetch_array($res)[0];
+        if($_POST['teacher'] != $teacher && $_SESSION['logged_teacher'] != 'admin'){
+            $errors[] = "Вы не можете добавлять запись об экзамене по чужому предмету!";
+        }
+        if(empty($errors))
+            $exam->add();
+        else
+            echo '<script>alert("'.array_shift($errors).'");</script>';
+    }
+}
+    
+if(isset($_GET['delete']) && isset($_SESSION['logged_teacher'])){
+    Exam::delete($_GET['delete']);
+}
+Exam::displayForm();
+Exam::displayTable();
+Inter::footer();
 ?>

@@ -1,12 +1,50 @@
 <?php
-include_once (realpath('../DB.php'));
-include_once (realpath('../Inter.php'));
-
-if(isset($_SESSION['teacher_login']) && $_SESSION['teacher_login'] == 'admin'){
+include_once (realpath('../classes/Exam.php'));
+include_once (realpath('../classes/Inter.php'));
+if(isset($_SESSION['logged_teacher']) && $_SESSION['logged_teacher'] == 'admin'){
     Inter::head();
-    Inter::echoTable('SELECT `exam_id`, `subject_name`, DATE_FORMAT(`exam_date`, "%d-%m-%Y") encoded_date, `teacher_full_name`, `student_full_name`, `team_name`, `exam_mark` FROM `exam` INNER JOIN subject ON subject_id=exam_subject_id INNER JOIN student ON student_id=exam_student_id INNER JOIN team ON student_team_id=team_id INNER JOIN teacher ON subject_teacher_id=teacher_id',
-                      array('№', 'Предмет', 'Дата', 'Преподаватель', 'Студент', 'Группа', 'Оценка'), 
-                      array('exam_id', 'subject_name', 'encoded_date', 'teacher_full_name', 'student_full_name', 'team_name', 'exam_mark'));
+    $db = new DB;
+    if(isset($_POST['push'])){
+        $errors = [];
+        if(trim($_POST['teacher'])==''){
+            $errors[] = "Введите преподавателя";
+        }
+        if(trim($_POST['date'])==''){
+            $errors[] = "Введите дату";
+        }
+        if(trim($_POST['student'])==''){
+            $errors[] = "Введите студента";
+        }
+        if(trim($_POST['mark'])==''){
+            $errors[] = "Введите оценку";
+        }
+        
+        if (isset($_GET['edit'])) {
+            if(empty($errors))
+                Exam::change($_GET['edit'], $_POST['teacher'], $_POST['date'], $_POST['student'], $_POST['mark']);
+            else
+                echo '<div style = "color: red">'.array_shift($errors).'</div>';
+        }
+        
+        else {
+            $exam = new Exam($_POST['teacher'], $_POST['date'], $_POST['student'], $_POST['mark']);
+            if(empty($errors))
+                $exam->add();
+            else
+                echo '<div style = "color: red">'.array_shift($errors).'</div>';
+        }
+    }
+    
+    if(isset($_GET['delete'])){
+        Exam::delete($_GET['delete']);
+    }
+
+    Exam::displayForm();
+    Exam::displayTable();
     Inter::footer();
+}
+
+else{
+    echo "<script>location.replace('index.php'); </script>";
 }
 ?>

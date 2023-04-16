@@ -8,6 +8,7 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   white-space: nowrap;
+  align-items: center;
 }
 .nav-scroller__item {
   color: #424242;
@@ -17,4 +18,8 @@
 }
 .nav-scroller__item:hover{
     color: red;
+}
+.nav-scroller__items img{
+    width: 200px;
+    padding: 0.5rem 1.25rem;
 }

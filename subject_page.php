@@ -1,11 +1,10 @@
 <?php
-include_once (realpath('DB.php'));
-include_once (realpath('Inter.php'));
+include_once (realpath('classes/Subject.php'));
+include_once (realpath('classes/Inter.php'));
 
-    Inter::head();
-    Inter::echoTable('SELECT subject_id, subject_name, teacher_full_name as name FROM subject INNER JOIN teacher ON `subject_teacher_id` = `teacher_id`', 
-                      array('№', 'Предмет', 'Преподаватель'), array('subject_id', 'subject_name', 'name'));
-    Inter::footer();
+Inter::head();
+Subject::displayForm();
+Subject::displayTable();
+Inter::footer();
 
 ?>
-

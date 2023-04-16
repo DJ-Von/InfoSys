@@ -1,12 +1,37 @@
 <?php
-include_once (realpath('../DB.php'));
-include_once (realpath('../Inter.php'));
-
-if(isset($_SESSION['teacher_login']) && $_SESSION['teacher_login'] == 'admin'){
+include_once (realpath('../classes/Team.php'));
+include_once (realpath('../classes/Inter.php'));
+if(isset($_SESSION['logged_teacher']) && $_SESSION['logged_teacher'] == 'admin'){
     Inter::head();
-    Inter::echoTable('SELECT team_id, team_name, teacher_full_name FROM `team` INNER JOIN teacher ON team_teacher_id = teacher_id', 
-                      array('№', 'Группа', 'Куратор'), 
-                      array('team_id', 'team_name', 'teacher_full_name'));
+    $db = new DB;
+    if(isset($_POST['push'])){
+        $errors = [];
+        if(trim($_POST['team_name'])==''){
+            $errors[] = "Введите группу";
+        }
+        if(empty($errors)){
+            if (isset($_GET['edit'])) {
+                Team::change($_GET['edit'], $_POST['team_name']);
+            }
+            else {
+                $team = new Team($_POST['team_name']);
+                $team->add();
+            }
+        }
+        else
+            echo '<div style = "color: red">'.array_shift($errors).'</div>';
+    }
+    
+    if(isset($_GET['delete'])){
+        Team::delete($_GET['delete']);
+    }
+    
+    Team::displayForm();
+    Team::displayTable();
     Inter::footer();
+}
+
+else{
+    echo "<script>location.replace('index.php'); </script>";
 }
 ?>
